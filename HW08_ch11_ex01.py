@@ -9,13 +9,22 @@
 
 
 # Body
-def store_to_dict():
-    pass
+def store_to_dict(file_name):
+    with open(file_name,'r') as fin:
+        lines = fin.readlines()
+    value = 0
+    wrd_dict = {}
+    for line in lines:
+      #  set default values  for every key
+        wrd_dict[line.strip()] = value
+        value +=1
+    return wrd_dict
 
 
 ###############################################################################
 def main():  # DO NOT CHANGE BELOW
-    words_dict = store_to_dict()
+    words_dict = store_to_dict('words.txt')
+    #print(words_dict)
     if "this" in words_dict:
         print("Yup.")
     if "qwertyuiop" in words_dict:

@@ -22,13 +22,52 @@ def print_hist_old(h):
 
 
 def print_hist_new(h):
-    pass
+    for h_key in sorted(h):
+        print(h_key, h[h_key])
+
+
+pledge_histogram = {}
 
 
 ###############################################################################
 # INSERT COMPLETED CODE FROM HW08_ch11_ex02a BELOW: ###########################
 ###############################################################################
+pledge_histogram = {}
 
+
+def histogram_old(word_list):
+    d = dict()
+    for word in word_list:
+        d[word] = d.get(word, 0) + 1
+    return d
+
+
+def histogram_new(word_list):
+    pledge_list = get_pledge_list()
+    hist_new = {}
+    hist_new = histogram_old(pledge_list)
+    return hist_new
+
+
+
+
+def get_pledge_list():
+    """ Opens pledge.txt and converts to a list, each item is a word in
+    the order it appears in the original file. returns the list.
+    """
+    # Your code here.
+    with open('pledge.txt', 'r') as fin:
+        lines = fin.read()
+        pledge_list = lines.split()
+
+        punct =',.:'
+    for idx in range(0, len(pledge_list)):
+        # search punctuation marks (p_mark) in pledge_list list of words
+        # and remove the punctuation if present
+        if any((p_mark in punct) for p_mark in pledge_list[idx]):
+            pledge_list[idx] = pledge_list[idx][:-1]
+
+    return pledge_list
 
 ###############################################################################
 # INSERT COMPLETED CODE FROM HW08_ch11_ex02a BELOW: ###########################
@@ -37,7 +76,7 @@ def main():
     """ Calls print_hist_new with the appropriate arguments to print the
     histogram of pledge.txt.
     """
-    pass
+    print_hist_new(histogram_new(get_pledge_list()))
 
 if __name__ == '__main__':
     main()

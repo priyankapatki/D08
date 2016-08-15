@@ -26,18 +26,20 @@
 pledge_histogram = {}
 
 
-def histogram_old(s):
+def histogram_old(word_list):
     d = dict()
-    for c in s:
-        if c not in d:
-            d[c] = 1
-        else:
-            d[c] += 1
+    for word in word_list:
+        d[word] = d.get(word, 0) + 1
     return d
 
 
-def histogram_new(s):
-    ...
+def histogram_new(word_list):
+    pledge_list = get_pledge_list()
+    hist_new = {}
+    hist_new = histogram_old(pledge_list)
+    return hist_new
+
+
 
 
 def get_pledge_list():
@@ -45,8 +47,18 @@ def get_pledge_list():
     the order it appears in the original file. returns the list.
     """
     # Your code here.
-    pass
-    # return pledge_list (uncomment this)
+    with open('pledge.txt', 'r') as fin:
+        lines = fin.read()
+        pledge_list = lines.split()
+
+        punct =',.:'
+    for idx in range(0, len(pledge_list)):
+        # search punctuation marks (p_mark) in pledge_list list of words
+        # and remove the punctuation if present
+        if any((p_mark in punct) for p_mark in pledge_list[idx]):
+            pledge_list[idx] = pledge_list[idx][:-1]
+
+    return pledge_list
 
 
 ###############################################################################

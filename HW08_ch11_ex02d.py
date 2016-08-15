@@ -14,7 +14,6 @@
 ###############################################################################
 # Imports
 
-
 # Body
 def invert_dict_old(d):
     inverse = dict()
@@ -26,17 +25,59 @@ def invert_dict_old(d):
             inverse[val].append(key)
     return inverse
 
-
 def invert_dict_new(d):
-    pass
+    inverse = dict()
+    for key in d:
+        inverse.setdefault(d[key], []).append(key)
+    return inverse
 
 
 def print_hist_newest(d):
-    pass
+    d_max = max(d)
+    for d_key in range(1, d_max+1):
+        if d_key in d:
+            print(d_key, d[d_key])
+        else:
+            print(d_key)
+
 
 ###############################################################################
 # INSERT COMPLETED CODE FROM HW08_ch11_ex02a BELOW: ###########################
 ###############################################################################
+pledge_histogram = {}
+
+
+def histogram_old(word_list):
+    d = dict()
+    for word in word_list:
+        d[word] = d.get(word, 0) + 1
+    return d
+
+
+def histogram_new(word_list):
+    pledge_list = get_pledge_list()
+    hist_new = {}
+    hist_new = histogram_old(pledge_list)
+    return hist_new
+
+
+def get_pledge_list():
+    """ Opens pledge.txt and converts to a list, each item is a word in
+    the order it appears in the original file. returns the list.
+    """
+    # Your code here.
+    with open('pledge.txt', 'r') as fin:
+        lines = fin.read()
+        pledge_list = lines.split()
+
+        punct = ',.:'
+    for idx in range(0, len(pledge_list)):
+        # search punctuation marks (p_mark) in pledge_list list of words
+        # and remove the punctuation if present
+        if any((p_mark in punct) for p_mark in pledge_list[idx]):
+            pledge_list[idx] = pledge_list[idx][:-1]
+
+    return pledge_list
 
 
 ###############################################################################
